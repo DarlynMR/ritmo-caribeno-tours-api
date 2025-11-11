@@ -1,59 +1,47 @@
-import path from 'path';
+// config/database.ts
+import { parse } from 'pg-connection-string';
 
 export default ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'postgres');
+  // Railway inyecta la URL de la base de datos automáticamente
+  const databaseUrl = env('DATABASE_URL');
 
-  const connections = {
-    mysql: {
+  if (!databaseUrl) {
+    console.error('DATABASE_URL environment variable is not set. Strapi will not start.');
+    // Retorna un objeto vacío o una config de SQLite para fallback local si lo deseas
+    return {
       connection: {
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
+        client: 'sqlite',
+        connection: {
+          filename: env('DATABASE_FILENAME', '.tmp/data.db'),
         },
+        useNullAsDefault: true,
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
-    },
-    postgres: {
-      connection: {
-        connectionString: env('DATABASE_URL'),
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
-        },
-        schema: env('DATABASE_SCHEMA', 'public'),
-      },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
-    },
-    sqlite: {
-      connection: {
-        filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
-      },
-      useNullAsDefault: true,
-    },
-  };
+    };
+  }
 
+  // Parsea la URL de la base de datos
+  const config = parse(databaseUrl);
+
+  // Retorna la configuración específica para Railway
   return {
     connection: {
-      client,
-      ...connections[client],
+      client: 'postgres',
+      connection: {
+        host: config.host,
+        port: parseInt(config.port, 10), // El parser devuelve un string
+        database: config.database,
+        user: config.user,
+        password: config.password,
+        ssl: {
+          // Esta es la línea clave.
+          // Railway requiere SSL, pero no necesita autorización de certificado estricta.
+          rejectUnauthorized: false
+        },
+      },
+      pool: {
+        min: env.int('DATABASE_POOL_MIN', 2),
+        max: env.int('DATABASE_POOL_MAX', 10),
+      },
       acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
     },
   };
