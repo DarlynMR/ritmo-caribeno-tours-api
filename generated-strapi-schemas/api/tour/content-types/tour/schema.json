@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tours",
+  "info": {
+    "singularName": "tour",
+    "pluralName": "tours",
+    "displayName": "Tour",
+    "description": "Tour content type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true, "unique": true },
+    "short_description": { "type": "string" },
+    "description": { "type": "richtext" },
+    "price": { "type": "decimal" },
+    "duration": { "type": "string" },
+    "featured": { "type": "boolean", "default": false },
+    "featured_order": { "type": "integer" },
+    "province": { "type": "relation", "relation": "manyToOne", "target": "api::province.province" },
+    "categories": { "type": "relation", "relation": "manyToMany", "target": "api::category.category" },
+    "images": { "type": "media", "multiple": true, "allowedTypes": ["images"] },
+    "gallery": { "type": "media", "multiple": true, "allowedTypes": ["images", "videos"] },
+    "days": { "type": "component", "repeatable": true, "component": "tour.day" },
+    "packages": { "type": "relation", "relation": "manyToMany", "target": "api::package.package" },
+    "seo_title": { "type": "string" },
+    "seo_description": { "type": "string" }
+  }
+}

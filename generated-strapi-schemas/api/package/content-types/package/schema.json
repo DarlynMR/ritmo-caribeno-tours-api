@@ -1,0 +1,16 @@
+{
+  "kind": "collectionType",
+  "collectionName": "packages",
+  "info": { "displayName": "Package", "singularName": "package", "pluralName": "packages" },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "name", "unique": true },
+    "price": { "type": "decimal" },
+    "featured": { "type": "boolean", "default": false },
+    "features": { "type": "component", "repeatable": true, "component": "package.feature" },
+    "cta_text": { "type": "string" },
+    "cta_link": { "type": "string" },
+    "tours": { "type": "relation", "relation": "manyToMany", "target": "api::tour.tour" }
+  }
+}

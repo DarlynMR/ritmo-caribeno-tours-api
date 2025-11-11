@@ -1,0 +1,13 @@
+{
+  "kind": "collectionType",
+  "collectionName": "provinces",
+  "info": { "singularName": "province", "pluralName": "provinces", "displayName": "Province" },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "name", "required": true, "unique": true },
+    "description": { "type": "text" },
+    "geo_meta": { "type": "json" },
+    "tours": { "type": "relation", "relation": "oneToMany", "target": "api::tour.tour" }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_tour_activities",
+  "info": { "displayName": "tour.activity" },
+  "options": {},
+  "attributes": {
+    "time": { "type": "string" },
+    "name": { "type": "string" }
+  }
+}

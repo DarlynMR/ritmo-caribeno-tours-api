@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_tour_places",
+  "info": { "displayName": "tour.place" },
+  "options": {},
+  "attributes": {
+    "name": { "type": "string" },
+    "description": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}
