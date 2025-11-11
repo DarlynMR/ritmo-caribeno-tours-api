@@ -1,0 +1,30 @@
+# Dependency directories
+node_modules
+
+# Strapi build and cache folders
+build
+dist
+.cache
+src/.cache
+
+# Environment files should not be in the image
+.env
+.env.development
+.env.production
+
+# IDE and OS specific files
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Log files
+*.log
+
+# Temporary files created by the agent
+strapi-schemas.zip
+generated-strapi-schemas

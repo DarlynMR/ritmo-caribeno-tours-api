@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  strapi:
+    container_name: ritmo-caribeno-strapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ritmo-caribeno-strapi:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_SSL: 'false'
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: ${NODE_ENV:-development}
+      CLOUDINARY_NAME: ${CLOUDINARY_NAME}
+      CLOUDINARY_KEY: ${CLOUDINARY_KEY}
+      CLOUDINARY_SECRET: ${CLOUDINARY_SECRET}
+    volumes:
+      # Mounts the src folder for hot-reloading in development
+      - ./src:/srv/app/src
+    ports:
+      - "1337:1337"
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: ritmo-caribeno-postgres
+    image: postgres:14-alpine
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  strapi-data:
+    driver: local
