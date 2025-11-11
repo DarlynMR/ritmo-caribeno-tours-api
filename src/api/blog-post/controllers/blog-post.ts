@@ -1,16 +1,7 @@
-import type { Core } from "@strapi/strapi";
+/**
+ * blog-post controller
+ */
 
-const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
-  async find(ctx) {
-    const { data, meta } = await strapi.service("api::blog-post.blog-post").find(ctx.query);
-    return { data, meta };
-  },
+import { factories } from '@strapi/strapi'
 
-  async findOne(ctx) {
-    const { id } = ctx.params;
-    const entity = await strapi.service("api::blog-post.blog-post").findOne(id, ctx.query);
-    return { data: entity };
-  },
-});
-
-export default controller;
+export default factories.createCoreController('api::blog-post.blog-post');

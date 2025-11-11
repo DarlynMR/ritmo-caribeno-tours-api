@@ -1,17 +1,7 @@
-import type { Core } from "@strapi/strapi";
+/**
+ * blog-post service
+ */
 
-const service = ({ strapi }: { strapi: Core.Strapi }) => ({
-  async find(query: any) {
-    return await strapi.entityService.findMany("api::blog-post.blog-post", {
-      ...query,
-    });
-  },
+import { factories } from '@strapi/strapi';
 
-  async findOne(id: string | number, query: any) {
-    return await strapi.entityService.findOne("api::blog-post.blog-post", id, {
-      ...query,
-    });
-  },
-});
-
-export default service;
+export default factories.createCoreService('api::blog-post.blog-post');

@@ -1,16 +1,7 @@
-import type { Core } from "@strapi/strapi";
+/**
+ * testimonial controller
+ */
 
-const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
-  async find(ctx) {
-    const { data, meta } = await strapi.service("api::testimonial.testimonial").find(ctx.query);
-    return { data, meta };
-  },
+import { factories } from '@strapi/strapi'
 
-  async findOne(ctx) {
-    const { id } = ctx.params;
-    const entity = await strapi.service("api::testimonial.testimonial").findOne(id, ctx.query);
-    return { data: entity };
-  },
-});
-
-export default controller;
+export default factories.createCoreController('api::testimonial.testimonial');
