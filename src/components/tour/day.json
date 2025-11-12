@@ -1,13 +1,33 @@
 {
   "collectionName": "components_tour_days",
-  "info": { "displayName": "tour.day", "description": "A day inside a tour" },
+  "info": {
+    "displayName": "tour.day",
+    "description": "A day inside a tour"
+  },
   "options": {},
   "attributes": {
-    "day_index": { "type": "integer" },
-    "title": { "type": "string" },
-    "time_range": { "type": "string" },
-    "description": { "type": "richtext" },
-    "activities": { "type": "component", "repeatable": true, "component": "tour.activity" },
-    "places": { "type": "component", "repeatable": true, "component": "tour.place" }
+    "day_index": {
+      "type": "integer"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "time_range": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "activities": {
+      "type": "component",
+      "component": "tour.activity",
+      "repeatable": true
+    },
+    "places": {
+      "type": "component",
+      "component": "tour.place",
+      "repeatable": true
+    }
   }
 }

@@ -33,7 +33,7 @@ export interface TourDay extends Struct.ComponentSchema {
     description: Schema.Attribute.RichText;
     places: Schema.Attribute.Component<'tour.place', true>;
     time_range: Schema.Attribute.String;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 

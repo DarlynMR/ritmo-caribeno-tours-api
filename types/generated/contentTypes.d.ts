@@ -663,26 +663,36 @@ export interface ApiTourTour extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    days: Schema.Attribute.Component<'tour.day', true>;
+    days: Schema.Attribute.Component<'tour.day', true> &
+      Schema.Attribute.Required;
     description: Schema.Attribute.RichText;
-    duration: Schema.Attribute.String;
+    duration: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 60;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     featured_order: Schema.Attribute.Integer;
     gallery: Schema.Attribute.Media<'images' | 'videos', true>;
-    images: Schema.Attribute.Media<'images', true>;
+    images: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tour.tour'> &
       Schema.Attribute.Private;
     packages: Schema.Attribute.Relation<'manyToMany', 'api::package.package'>;
-    price: Schema.Attribute.Decimal;
+    price: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<85>;
     province: Schema.Attribute.Relation<'manyToOne', 'api::province.province'>;
     publishedAt: Schema.Attribute.DateTime;
     seo_description: Schema.Attribute.String;
     seo_title: Schema.Attribute.String;
     short_description: Schema.Attribute.String;
-    slug: Schema.Attribute.UID<'title'> &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
