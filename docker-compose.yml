@@ -24,6 +24,7 @@ services:
       CLOUDINARY_NAME: ${CLOUDINARY_NAME}
       CLOUDINARY_KEY: ${CLOUDINARY_KEY}
       CLOUDINARY_SECRET: ${CLOUDINARY_SECRET}
+      CLOUDINARY_PRESET: ${CLOUDINARY_PRESET}
     volumes:
       # Mounts the src folder for hot-reloading in development
       - ./src:/srv/app/src
