@@ -12,6 +12,7 @@ export default ({ env }) => ({
         upload: { folder: 'ritmo-caribeno-tours' },
         uploadStream: { folder: 'ritmo-caribeno-tours' },
         delete: {},
+        upload_preset: env("CLOUDINARY_PRESET"),
       },
     },
   },
