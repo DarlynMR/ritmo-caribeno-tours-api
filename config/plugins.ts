@@ -9,10 +9,9 @@ export default ({ env }) => ({
       },
       // Configure folder for Cloudinary uploads so media files are stored under 'ritmo-caribeno-tours'
       actionOptions: {
-        upload: { folder: 'ritmo-caribeno-tours' },
-        uploadStream: { folder: 'ritmo-caribeno-tours' },
+        upload: { folder: 'ritmo-caribeno-tours', },
+        uploadStream: { folder: 'ritmo-caribeno-tours', },
         delete: {},
-        // upload_preset: env("CLOUDINARY_PRESET"),
       },
     },
   },
