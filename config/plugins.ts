@@ -6,12 +6,19 @@ export default ({ env }) => ({
         cloud_name: env("CLOUDINARY_NAME"),
         api_key: env("CLOUDINARY_KEY"),
         api_secret: env("CLOUDINARY_SECRET"),
+        secure: true
       },
-      // Configure folder for Cloudinary uploads so media files are stored under 'ritmo-caribeno-tours'
       actionOptions: {
-        upload: { folder: 'ritmo-caribeno-tours', },
-        uploadStream: { folder: 'ritmo-caribeno-tours', },
-        delete: {},
+        upload: {
+          folder: "ritmo-caribeno-tours",
+          unique_filename: false,
+          use_filename: true,
+        },
+        uploadStream: {
+          folder: "ritmo-caribeno-tours",
+          unique_filename: false,
+          use_filename: true,
+        },
       },
     },
   },
